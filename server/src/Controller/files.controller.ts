@@ -4,6 +4,8 @@ import { UploadApiResponse, v2 as cloudinary } from "cloudinary";
 import File from "../Models/File";
 import dotenv from "dotenv";
 
+import https from 'https'
+
 dotenv.config();
 const storage = multer.diskStorage({});
 
@@ -62,6 +64,25 @@ export const getFileById = async (req: express.Request, res: express.Response) =
       format,
       id
     })
+  } catch (error) {
+    return res.status(500).json({ message: "server error" });
+
+  }
+};
+
+export const downloadFileById = async (req: express.Request, res: express.Response) => {
+  try {
+    const id = req.params.id;
+    const file = await File.findById(id);
+    if (!file) {
+      return res.status(404).json({ message: "file doesnt exist" });
+    }
+
+    if(file.secure_url){
+      const url = file.secure_url.toString();
+      https.get(url , (fileStream) => fileStream.pipe(res))
+    }
+
   } catch (error) {
     return res.status(500).json({ message: "server error" });
 
