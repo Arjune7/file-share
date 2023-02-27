@@ -2,6 +2,7 @@ import axios from 'axios'
 import React, { useState } from 'react'
 import DownLoadFile from './DownLoadFile'
 import DropZone from './DropZone'
+import EmailComponent from './EmailComponent'
 import RenderFile from './RenderFile'
 
 function DropBox() {
@@ -61,6 +62,7 @@ function DropBox() {
                     downloadPageLink &&
                     <div className='p-2 text-center'>
                         <DownLoadFile downloadPageLink={downloadPageLink} />
+                        <EmailComponent id={id}/>
                         <button className='p-2 my-5 bg-gray-900 rounded-md w-44 focus:outline-none' onClick={resetComponent}>Upload New File</button>
                     </div>
                 }
