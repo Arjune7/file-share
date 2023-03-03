@@ -1,0 +1,29 @@
+{
+    "version": 2,
+    "builds": [
+      {
+        "src": "api/**/*.ts",
+        "use": "@vercel/node"
+      },
+      {
+        "src": "client/package.json",
+        "use": "@vercel/static-build",
+        "config": {
+          "root": "client",
+          "buildCommand": "yarn build",
+          "outputDirectory": "dist/client"
+        }
+      }
+    ],
+    "routes": [
+      {
+        "src": "/api/(.*)",
+        "dest": "api/$1"
+      },
+      {
+        "src": "/(.*)",
+        "dest": "dist/client/$1"
+      }
+    ]
+  }
+  
